@@ -1,20 +1,29 @@
-import { useSession, signIn, signOut } from "next-auth/react"
+import { Avatar, Box, Button, HStack, Text, VStack } from "@chakra-ui/react";
+import WritePost from "../components/WritePost";
+import { signOut } from "next-auth/react";
+import useSWR from 'swr'
+import fetcher from "../lib/fetcher";
+import PostList from "../components/PostList";
 
 export default function Component() {
-  const { data: session } = useSession()
-  console.log(session)
-  if (session) {
-    return (
-      <>
-        Signed in as {session.user.email} <br />
-        <button onClick={() => signOut()}>Sign out</button>
-      </>
-    )
-  }
+  const { data, error } = useSWR('/api/write', fetcher)
+
+  if (error)  return <Box>服务器抽风了</Box>
+
   return (
-    <>
-      Not signed in <br />
-      <button onClick={() => signIn()}>Sign in</button>
-    </>
+    <HStack
+      p={5}>
+      <VStack
+        w="60%"
+        h="80vh">
+       <WritePost/>
+       {
+         data?.map((post) => {
+           return <PostList post={post} key={post.id}/>
+         })
+       }
+       <button onClick={_ => signOut()}>退出</button>
+      </VStack>
+    </HStack>
   )
 }

@@ -61,6 +61,9 @@ model Post {
   title     String
   content   String?
   authorId  String
+  createdAt DateTime @default(now())
+  category String
+
   author    User?   @relation(fields: [authorId], references: [id])
   comment Comment[]
 }
@@ -68,6 +71,7 @@ model Post {
 model Comment {
   id String @id @default(uuid())
   content String @db.Text
+  createdAt DateTime @default(now())
 
   postId String
   post Post @relation(fields: [postId], references: [id])
