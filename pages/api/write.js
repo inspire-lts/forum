@@ -22,7 +22,12 @@ export default async (req, res) => {
   }
 
   if (req.method === "GET") {
-    const result = await prisma.post.findMany()
+    const result = await prisma.post.findMany({
+      orderBy: {
+        createdAt: "desc"
+      }
+    }
+    )
     res.status(200).json(result)
   }
 
