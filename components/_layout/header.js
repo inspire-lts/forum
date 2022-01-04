@@ -12,7 +12,7 @@ export default function Header() {
       p={2}>
       <Link
         href="/">
-          <Text fontWeight="bold" fontSize="2xl">V3EX</Text>
+          <Text fontWeight="bold" fontSize="2xl" _hover={{cursor: "pointer"}}>V3EX</Text>
       </Link>
       <Search2Icon/>
       <Box>

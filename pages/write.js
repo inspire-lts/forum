@@ -4,6 +4,7 @@ import "@uiw/react-md-editor/markdown-editor.css";
 import "@uiw/react-markdown-preview/markdown.css";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
+import { useSWRConfig } from "swr";
 
 const MDEditor = dynamic(
   () => import("@uiw/react-md-editor").then((mod) => mod.default),
@@ -16,6 +17,7 @@ export default function Write() {
   const [content, setContent] = useState("hello world")
   const [category, setCategory] = useState("")
   const router = useRouter()
+  const { mutate } = useSWRConfig()
 
   const handleSubmit = () => {
     const formData = {title, content, category}
@@ -26,6 +28,7 @@ export default function Write() {
       },
       body: JSON.stringify({formData})
     })
+    mutate("/api/write")
     router.push("/")
   }
   return (
