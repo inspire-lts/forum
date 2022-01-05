@@ -21,7 +21,7 @@ export default function Write() {
 
   const handleSubmit = () => {
     const formData = {title, content, category}
-    fetch('/api/write', {
+    await fetch('/api/write', {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
