@@ -3,27 +3,28 @@ import Link from "next/link";
 import { Search2Icon } from "@chakra-ui/icons";
 import { useSession, signIn } from "next-auth/react";
 import SwitchMode from "../SwitchMode";
+import AvatarMenu from "../AvatarMenu";
 
 export default function Header() {
-  const { data: session } = useSession()
+  const { data: session } = useSession();
   return (
-    <HStack
-      justifyContent="space-between"
-      p={2}>
-      <Link
-        href="/">
-          <Text fontWeight="bold" fontSize="2xl" _hover={{cursor: "pointer"}}>V3EX</Text>
+    <HStack justifyContent="space-between" p={2}>
+      <Link href="/">
+        <Text fontWeight="bold" fontSize="2xl" _hover={{ cursor: "pointer" }}>
+          V3EX
+        </Text>
       </Link>
-      <Search2Icon/>
-      <Box>
-        {
-          !session ? 
-          <Button onClick={() => signIn()} size="sm">登录</Button> : 
-          <Avatar src={session.user.image}/>
-        }
-        <SwitchMode/>
+      <Search2Icon />
+      <Box display="flex">
+        {!session ? (
+          <Button onClick={() => signIn()} size="sm">
+            登录
+          </Button>
+        ) : (
+          <AvatarMenu image={session.user.image} />
+        )}
+        <SwitchMode />
       </Box>
     </HStack>
-  )
-
+  );
 }

@@ -1,4 +1,12 @@
-import { Container, HStack, Box, Text, Input, Select, Button } from "@chakra-ui/react";
+import {
+  Container,
+  HStack,
+  Box,
+  Text,
+  Input,
+  Select,
+  Button,
+} from "@chakra-ui/react";
 import { useState } from "react";
 import "@uiw/react-md-editor/markdown-editor.css";
 import "@uiw/react-markdown-preview/markdown.css";
@@ -10,46 +18,59 @@ const MDEditor = dynamic(
   () => import("@uiw/react-md-editor").then((mod) => mod.default),
   { ssr: false }
 );
-const myCategory = [{value: "技术 JS"}, {value: "技术 JAVA"}, {value: "生活 电影"}]
+const myCategory = [
+  { value: "技术 JS" },
+  { value: "技术 JAVA" },
+  { value: "生活 电影" },
+];
 
 export default function Write() {
-  const [title, setTitle] = useState("")
-  const [content, setContent] = useState("hello world")
-  const [category, setCategory] = useState("")
-  const router = useRouter()
-  const { mutate } = useSWRConfig()
+  const [title, setTitle] = useState("");
+  const [content, setContent] = useState("hello world");
+  const [category, setCategory] = useState("");
+  const router = useRouter();
+  const { mutate } = useSWRConfig();
 
-  const handleSubmit = () => {
-    const formData = {title, content, category}
-    await fetch('/api/write', {
+  const handleSubmit = async () => {
+    const formData = { title, content, category };
+    await fetch("/api/write", {
       method: "POST",
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
       },
-      body: JSON.stringify({formData})
-    })
-    mutate("/api/write")
-    router.push("/")
-  }
+      body: JSON.stringify({ formData }),
+    });
+    mutate("/api/write");
+    router.push("/");
+  };
   return (
     <Box py={5}>
       <Text mb={8}>创建新的主题</Text>
-      <Container
-        maxW="container.md">
-          <Input placeholder="标题" mb={4} value={title} onChange={(e) => setTitle(e.target.value)}/>
-          <MDEditor
-            value={content}
-            onChange={setContent}
-          />
-          <Select placeholder="选择分类" mt={5} onChange={e => setCategory(e.target.value)}>
-            {
-              myCategory.map((item => {
-                return <option value={item.value} key={item.value}>{item.value}</option>
-              }))
-            }
-          </Select>
-          <Button mt={2} size="sm" onClick={_ => handleSubmit()}>提交</Button>
+      <Container maxW="container.md">
+        <Input
+          placeholder="标题"
+          mb={4}
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+        />
+        <MDEditor value={content} onChange={setContent} />
+        <Select
+          placeholder="选择分类"
+          mt={5}
+          onChange={(e) => setCategory(e.target.value)}
+        >
+          {myCategory.map((item) => {
+            return (
+              <option value={item.value} key={item.value}>
+                {item.value}
+              </option>
+            );
+          })}
+        </Select>
+        <Button mt={2} size="sm" onClick={(_) => handleSubmit()}>
+          提交
+        </Button>
       </Container>
     </Box>
-  )
+  );
 }

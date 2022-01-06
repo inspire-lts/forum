@@ -3,7 +3,7 @@ import { SunIcon, MoonIcon } from "@chakra-ui/icons";
 
 export default function SwitchMode() {
   const { colorMode, toggleColorMode } = useColorMode();
-  
+
   return (
     <IconButton
       ml={8}

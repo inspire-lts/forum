@@ -30,6 +30,7 @@
     "timeago.js": "^4.0.2"
   },
   "devDependencies": {
-    "babel-plugin-superjson-next": "^0.4.2"
+    "babel-plugin-superjson-next": "^0.4.2",
+    "prettier": "2.5.1"
   }
 }

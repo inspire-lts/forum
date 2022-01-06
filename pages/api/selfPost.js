@@ -8,23 +8,16 @@ export default async (req, res) => {
     res.status(401).json({ unauthorized: true });
   }
 
-  if (req.method === "POST") {
-    const {
-      formData: { title, content, category },
-    } = req.body;
-    const result = await prisma.post.create({
-      data: {
-        title,
-        content,
-        category,
-        author: { connect: { email: session.user.email } },
+  if (req.method === "GET") {
+    const user = await prisma.user.findMany({
+      where: {
+        email: session.user.email,
       },
     });
-    res.status(200).json(result);
-  }
-
-  if (req.method === "GET") {
     const result = await prisma.post.findMany({
+      where: {
+        authorId: user[0].id,
+      },
       orderBy: {
         createdAt: "desc",
       },

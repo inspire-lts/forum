@@ -1,6 +1,6 @@
-import { SessionProvider } from "next-auth/react"
-import { ChakraProvider } from "@chakra-ui/react"
-import Layout from "../components/_layout"
+import { SessionProvider } from "next-auth/react";
+import { ChakraProvider } from "@chakra-ui/react";
+import Layout from "../components/_layout";
 
 export default function App({
   Component,
@@ -14,5 +14,5 @@ export default function App({
         </Layout>
       </SessionProvider>
     </ChakraProvider>
-  )
+  );
 }
