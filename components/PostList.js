@@ -5,6 +5,7 @@ import {
   Avatar,
   Box,
   Divider,
+  Button,
   Tag,
 } from "@chakra-ui/react";
 import { format } from "timeago.js";
@@ -34,10 +35,10 @@ export default function PostList({ post }) {
             </Text>
           </Link>
           <HStack>
-            <Text color="gray.300" fontSize="xs">
+            <Button color="gray.300" size="xs" p={1}>
               {post.category.split(" ")[1]}
-            </Text>
-            <Text color="gray.300" fontSize="xs">
+            </Button>
+            <Text fontSize="xs">
               {data?.name}
             </Text>
             <Text color="gray.300" fontSize="xs">

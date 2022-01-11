@@ -25,6 +25,7 @@ export default function AvatarMenu({ image }) {
           shadow="base"
           right="2px"
           top="50px"
+          _hover={{ cursor: "pointer"}}
         >
           <Link href="/dashboard">
             <Text onClick={() => setToggle(false)}>个人主页</Text>

@@ -26,7 +26,7 @@ const myCategory = [
 
 export default function Write() {
   const [title, setTitle] = useState("");
-  const [content, setContent] = useState("hello world");
+  const [content, setContent] = useState("请注意，帖子一旦发表不可以删除");
   const [category, setCategory] = useState("");
   const router = useRouter();
   const { mutate } = useSWRConfig();

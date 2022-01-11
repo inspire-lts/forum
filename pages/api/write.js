@@ -4,10 +4,6 @@ import prisma from "../../lib/prisma";
 export default async (req, res) => {
   const session = await getSession({ req });
 
-  if (!session) {
-    res.status(401).json({ unauthorized: true });
-  }
-
   if (req.method === "POST") {
     const {
       formData: { title, content, category },

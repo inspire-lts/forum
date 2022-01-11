@@ -67,7 +67,7 @@ export default function PostComment({ post }) {
       </VStack>
       <Divider />
       {data?.map((comment) => {
-        return <Comment key={comment.id} comment={comment} />;
+        return <Comment key={comment.id} comment={comment} authorId={post[0].authorId} />;
       })}
     </VStack>
   );

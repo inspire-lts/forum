@@ -1,4 +1,4 @@
-import { Text, VStack } from "@chakra-ui/react";
+import { Divider, Text, VStack } from "@chakra-ui/react";
 import prisma from "../../lib/prisma";
 import { serialize } from "next-mdx-remote/serialize";
 import PostComment from "../../components/PostComment";
