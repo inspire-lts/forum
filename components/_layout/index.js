@@ -7,7 +7,7 @@ export default function Layout({ children }) {
     <Box>
       <Container maxW="container.lg">
         <Header />
-        <Divider />
+        <Divider shadow={"base"} />
         {children}
         <Divider />
         <Footer />

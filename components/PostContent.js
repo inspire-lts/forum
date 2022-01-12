@@ -20,7 +20,6 @@ export default function PostContent({ post, content }) {
   const { data, error } = useSWR(`/api/post/${post[0].authorId}`, fetcher);
   const { data: append } = useSWR(`/api/append/${post[0].id}`, fetcher);
 
-  console.log(content, "content")
   return (
     <VStack w="80%" boxShadow="base" p={2}>
       <HStack justifyContent="space-between" w="100%" px={2}>

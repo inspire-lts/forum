@@ -36,7 +36,7 @@ export default function PostList({ post }) {
           </Link>
           <HStack>
             <Button color="gray.300" size="xs" p={1}>
-              {post.category.split(" ")[1]}
+              {post.category}
             </Button>
             <Text fontSize="xs">
               {data?.name}

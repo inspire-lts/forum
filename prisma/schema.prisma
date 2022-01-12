@@ -66,6 +66,14 @@ model Post {
 
   author    User?   @relation(fields: [authorId], references: [id])
   comment Comment[]
+  append Append[]
+}
+model Append {
+  id String @id @default(uuid())
+  content String
+  createdAt DateTime @default(now())
+  postId String
+  post Post @relation(fields: [postId], references: [id])
 }
 
 model Comment {

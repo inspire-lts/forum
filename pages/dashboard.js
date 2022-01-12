@@ -34,6 +34,8 @@ export default function DashBoard() {
         <TabList>
           <Tab>创建的主题</Tab>
           <Tab>收藏的主题</Tab>
+          <Tab>关注者</Tab>
+          <Tab>粉丝</Tab>
         </TabList>
         <TabPanels>
           <TabPanel>
@@ -42,6 +44,12 @@ export default function DashBoard() {
                 return <PostList post={post} key={post.id} />;
               })}
             </VStack>
+          </TabPanel>
+          <TabPanel>
+            <p>two!</p>
+          </TabPanel>
+          <TabPanel>
+            <p>two!</p>
           </TabPanel>
           <TabPanel>
             <p>two!</p>

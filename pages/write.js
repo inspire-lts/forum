@@ -19,9 +19,10 @@ const MDEditor = dynamic(
   { ssr: false }
 );
 const myCategory = [
-  { value: "技术 JS" },
-  { value: "技术 JAVA" },
-  { value: "生活 电影" },
+  { value: "JS" },
+  { value: "JAVA" },
+  { value: "电影" },
+  { value: "找工作" },
 ];
 
 export default function Write() {
