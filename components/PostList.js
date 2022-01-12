@@ -9,13 +9,10 @@ import {
   Tag,
 } from "@chakra-ui/react";
 import { format } from "timeago.js";
-import useSWR from "swr";
-import fetcher from "../lib/fetcher";
 import Link from "next/link";
 
 export default function PostList({ post }) {
-  const { data, error } = useSWR(`/api/post/${post.authorId}`, fetcher);
-  const { data: comment } = useSWR(`/api/comment/${post.id}`, fetcher);
+  const { author, comment } = post;
 
   return (
     <HStack
@@ -27,9 +24,9 @@ export default function PostList({ post }) {
       justifyContent="space-between"
     >
       <HStack>
-        <Avatar src={data?.image} />
+        <Avatar src={author?.image} />
         <VStack spacing={0}>
-          <Link href={`/post/${post.title}`}>
+          <Link href={`/post/${post.id}`}>
             <Text fontSize="xl" _hover={{ cursor: "pointer" }}>
               {post.title}
             </Text>
@@ -38,9 +35,7 @@ export default function PostList({ post }) {
             <Button color="gray.300" size="xs" p={1}>
               {post.category}
             </Button>
-            <Text fontSize="xs">
-              {data?.name}
-            </Text>
+            <Text fontSize="xs">{author?.name}</Text>
             <Text color="gray.300" fontSize="xs">
               {format(post.createdAt, "zh_CN")}
             </Text>

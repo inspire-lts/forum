@@ -34,14 +34,14 @@ export default function Write() {
 
   const handleSubmit = async () => {
     const formData = { title, content, category };
-    await fetch("/api/write", {
+    await fetch("/api/post", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({ formData }),
     });
-    mutate("/api/write");
+    mutate("/api/post");
     router.push("/");
   };
   return (

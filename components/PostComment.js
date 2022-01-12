@@ -15,7 +15,7 @@ import fetcher from "../lib/fetcher";
 import Comment from "./Comment";
 
 export default function PostComment({ post }) {
-  const postId = post[0].id;
+  const postId = post?.id;
   const [replay, setReplay] = useState("");
   const { data } = useSWR(`/api/comment/${postId}`, fetcher);
   const { data: session } = useSession();
@@ -67,7 +67,7 @@ export default function PostComment({ post }) {
       </VStack>
       <Divider />
       {data?.map((comment) => {
-        return <Comment key={comment.id} comment={comment} authorId={post[0].authorId} />;
+        return <Comment key={comment.id} comment={comment} authorId={post.authorId} />;
       })}
     </VStack>
   );

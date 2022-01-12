@@ -1,5 +1,4 @@
-import { getSession } from "next-auth/react";
-import prisma from "../../../../lib/prisma";
+import prisma from "../../../lib/prisma";
 
 export default async (req, res) => {
   const userId = req.query.id;

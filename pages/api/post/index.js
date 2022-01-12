@@ -1,5 +1,5 @@
 import { getSession } from "next-auth/react";
-import prisma from "../../lib/prisma";
+import prisma from "../../../lib/prisma";
 
 export default async (req, res) => {
   const session = await getSession({ req });
@@ -21,6 +21,10 @@ export default async (req, res) => {
 
   if (req.method === "GET") {
     const result = await prisma.post.findMany({
+      include: {
+        author: true,
+        comment: true
+      },
       orderBy: {
         createdAt: "desc",
       },

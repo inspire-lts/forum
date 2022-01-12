@@ -5,10 +5,6 @@ export default async (req, res) => {
   const session = await getSession({ req })
   const postId = req.query.id;
 
-  if (!session) {
-    res.status(401).json({ unauthorized: true });
-  }
-
   if (req.method === "POST") {
     const { content } = req.body;
     const append = await prisma.append.create({

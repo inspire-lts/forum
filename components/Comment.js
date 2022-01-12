@@ -4,7 +4,7 @@ import useSWR from "swr";
 import fetcher from "../lib/fetcher";
 
 export default function Comment({ comment, authorId }) {
-  const { data, error } = useSWR(`/api/post/${comment.authorId}`, fetcher);
+  const { data, error } = useSWR(`/api/user/${comment.authorId}`, fetcher);
 
   return (
     <VStack alignItems="flex-start" w="80%" px={1}>

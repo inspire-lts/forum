@@ -13,7 +13,7 @@ export default function Append({ postId }) {
     <VStack w="100%">
       {data?.map((append, index) => {
         return (
-          <VStack w="100%" alignItems={"flex-start"} px={2}>
+          <VStack w="100%" alignItems={"flex-start"} px={2} key={index}>
             <HStack>
               <Text color="gray.400">第{index + 1}条附言</Text>
               <Text color="gray.400">{format(append.createdAt, "zh_CN")}</Text>
