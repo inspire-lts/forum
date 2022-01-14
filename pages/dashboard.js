@@ -18,8 +18,14 @@ import fetcher from "../lib/fetcher";
 import PostList from "../components/PostList";
 
 export default function DashBoard() {
-  const { data: session } = useSession();
-  const { data } = useSWR("/api/selfPost", fetcher);
+  const { data: session, status } = useSession();
+  const { data, error } = useSWR("/api/selfPost", fetcher);
+  if (status === "loading") {
+    return <Text>loading</Text>;
+  }
+  if (error) return <Box>服务器抽风了</Box>;
+  if (!data) return <Box>loading</Box>;
+
   return (
     <VStack p={2} alignItems="flex-start">
       <HStack>

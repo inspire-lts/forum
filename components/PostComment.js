@@ -15,13 +15,16 @@ import fetcher from "../lib/fetcher";
 import Comment from "./Comment";
 
 export default function PostComment({ post }) {
+  const { comment} = post
   const postId = post?.id;
   const [replay, setReplay] = useState("");
-  const { data } = useSWR(`/api/comment/${postId}`, fetcher);
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
   const { mutate } = useSWRConfig();
   const toast = useToast();
 
+  if (status === "loading") {
+    return <Text>loading</Text>
+  }
   const handleReplay = (e) => {
     let replayValue = e.target.value;
     setReplay(replayValue);
@@ -49,7 +52,7 @@ export default function PostComment({ post }) {
       body: JSON.stringify({ replay }),
     });
     setReplay("");
-    mutate(`/api/comment/${postId}`);
+    mutate(`/api/post/${postId}`);
   };
   return (
     <VStack p={2} w="80%" border="1px" borderRadius="5px">
@@ -66,7 +69,7 @@ export default function PostComment({ post }) {
         </Button>
       </VStack>
       <Divider />
-      {data?.map((comment) => {
+      {comment?.map((comment) => {
         return <Comment key={comment.id} comment={comment} authorId={post.authorId} />;
       })}
     </VStack>

@@ -1,10 +1,14 @@
-import { Avatar, HStack, Input } from "@chakra-ui/react";
+import { Avatar, HStack, Input, Text } from "@chakra-ui/react";
 import { useSession, signIn } from "next-auth/react";
 import { useRouter } from "next/router";
 
 export default function WritePost() {
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
   const router = useRouter();
+
+  if (status === "loading") {
+    return <Text>loading</Text>;
+  }
   return (
     <HStack
       p={2}

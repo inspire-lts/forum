@@ -11,7 +11,10 @@ export default async (req, res) => {
         id: postId
       },
       include: {
-        favoritedBy: true
+        favoritedBy: true,
+        comment: true,
+        append: true,
+        author: true
       }
     });
     return res.status(200).json(post)

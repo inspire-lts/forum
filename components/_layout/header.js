@@ -6,7 +6,11 @@ import SwitchMode from "../SwitchMode";
 import AvatarMenu from "../AvatarMenu";
 
 export default function Header() {
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
+ 
+  if (status === "loading") {
+    return <Text>loading</Text>
+  }
   return (
     <HStack justifyContent="space-between" p={2}>
       <Link href="/">

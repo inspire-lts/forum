@@ -12,7 +12,7 @@ const MDEditor = dynamic(
   { ssr: false }
 );
 
-export default function Append({ postId, slug }) {
+export default function Append({ postId }) {
   const [content, setContent] = useState("附言内容");
   const { mutate } = useSWRConfig()
   const router = useRouter()
@@ -25,8 +25,8 @@ export default function Append({ postId, slug }) {
       },
       body: JSON.stringify({ content })
     })
-    mutate(`/api/append/${postId}`)
-    router.push(`/post/${slug}`)
+    mutate(`/api/post/${postId}`)
+    router.push(`/post/${postId}`)
   }
   return (
     <VStack p={2} alignItems={"flex-start"} spacing={5}>
@@ -50,21 +50,8 @@ export default function Append({ postId, slug }) {
   );
 }
 
-export async function getStaticPaths() {
-  const posts = await prisma.post.findMany();
-  const paths = posts.map((post) => ({
-    params: {
-      slug: post.id,
-    },
-  }));
 
-  return {
-    paths,
-    fallback: false,
-  };
-}
-
-export async function getStaticProps({ params }) {
+export async function getServerSideProps({ params }) {
   const id = params.slug
   const post = await prisma.post.findUnique({
     where: {
@@ -75,7 +62,6 @@ export async function getStaticProps({ params }) {
   return {
     props: {
       postId: id,
-      slug: post.title
     },
   };
 }

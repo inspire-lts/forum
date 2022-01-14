@@ -18,6 +18,10 @@ export default async (req, res) => {
       where: {
         authorId: user[0].id,
       },
+      include: {
+        author: true,
+        comment: true,
+      },
       orderBy: {
         createdAt: "desc",
       },

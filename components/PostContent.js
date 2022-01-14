@@ -9,7 +9,6 @@ import {
 } from "@chakra-ui/react";
 import useSWR, { useSWRConfig } from "swr";
 import { useSession } from "next-auth/react";
-import fetcher from "../lib/fetcher";
 import { format } from "timeago.js";
 import { MDXRemote } from "next-mdx-remote";
 import MDXComponents from "./MDXComponent";
@@ -18,17 +17,19 @@ import Append from "./Append";
 import { useState } from "react";
 
 export default function PostContent({ post, content }) {
-  const { data: session } = useSession();
+  const { author, append } = post;
+  const { data: session, status } = useSession();
+  if (status === "loading") {
+    return <Text>loading</Text>
+  }
   const router = useRouter();
   const { mutate } = useSWRConfig();
-  const { data, error } = useSWR(`/api/user/${post?.authorId}`, fetcher);
-  const { data: append } = useSWR(`/api/append/${post?.id}`, fetcher);
   const isAlreadyFavoriting = !!post?.favoritedBy.find(
     (f) => f.email === session?.user?.email
   );
   const [favorite, setFavorite] = useState(isAlreadyFavoriting);
   const favoriteCount = post?.favoritedBy?.length;
-
+  
   const submitFavorite = async () => {
     const operation = !favorite ? "connect" : "disconnect";
     await fetch(`/api/favorite/${post.id}`, {
@@ -39,7 +40,7 @@ export default function PostContent({ post, content }) {
       body: JSON.stringify({ operation }),
     });
     setFavorite(!favorite);
-    mutate(`/api/post/${post?.id}`)
+    mutate(`/api/post/${post?.id}`);
   };
   return (
     <VStack w="80%" boxShadow="base" p={2}>
@@ -47,16 +48,16 @@ export default function PostContent({ post, content }) {
         <Text fontWeight="bold" fontSize="2xl">
           {post?.title}
         </Text>
-        <Avatar src={data?.image} size="sm" />
+        <Avatar src={author?.image} size="sm" />
       </HStack>
       <HStack w="100%" px={2}>
         <Text color="gray.300" fontSize="xs">
-          {data?.name}
+          {author?.name}
         </Text>
         <Text color="gray.300" fontSize="xs">
           {format(post?.createdAt, "zh_CN")}
         </Text>
-        {data?.id === post?.authorId && append?.length < 3 && (
+        {author?.id === post?.authorId && append?.length < 3 && (
           <Button
             color="gray.400"
             size={"xs"}
