@@ -1,11 +1,20 @@
 import { Avatar, Box, VStack, Text, useOutsideClick } from "@chakra-ui/react";
+import { useSession } from "next-auth/react";
+import useSWR from "swr";
+import fetcher from "../lib/fetcher";
 import { useRef, useState } from "react";
 import { signOut } from "next-auth/react";
 import Link from "next/link";
 
 export default function AvatarMenu({ image }) {
+  const { data: session, status } = useSession();
+  const { data: user } = useSWR(`/api/email/${session?.user?.email}`, fetcher);
   const [toggle, setToggle] = useState(false);
   const avatarRef = useRef(null);
+
+  if (status === "loading") {
+    return <Text>loading</Text>
+  }
 
   useOutsideClick({
     ref: avatarRef,
@@ -27,7 +36,7 @@ export default function AvatarMenu({ image }) {
           top="50px"
           _hover={{ cursor: "pointer"}}
         >
-          <Link href="/dashboard">
+          <Link href={`/dashboard/${user.id}`}>
             <Text onClick={() => setToggle(false)}>个人主页</Text>
           </Link>
           <Link href="/setting">

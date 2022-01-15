@@ -1,13 +1,4 @@
-import {
-  HStack,
-  VStack,
-  Text,
-  Avatar,
-  Box,
-  Divider,
-  Button,
-  Tag,
-} from "@chakra-ui/react";
+import { HStack, VStack, Text, Avatar, Button, Tag } from "@chakra-ui/react";
 import { format } from "timeago.js";
 import Link from "next/link";
 
@@ -35,8 +26,10 @@ export default function PostList({ post }) {
             <Button color="gray.300" size="xs" p={1}>
               {post.category}
             </Button>
-            <Text fontSize="xs">{author?.name}</Text>
-            <Text color="gray.300" fontSize="xs">
+            <Link href={`/dashboard/${author.id}`} >
+              <Text color={"gray.400"}  _hover={{ cursor: "pointer"}}>{author?.name}</Text>
+            </Link>
+            <Text color="gray.400" fontSize="xs">
               {format(post.createdAt, "zh_CN")}
             </Text>
           </HStack>

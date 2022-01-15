@@ -12,7 +12,11 @@ export default async (req, res) => {
       },
       include: {
         favoritedBy: true,
-        comment: true,
+        comment: {
+          include: {
+            author: true
+          }
+        },
         append: true,
         author: true
       }

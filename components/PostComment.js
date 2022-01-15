@@ -10,8 +10,7 @@ import {
 } from "@chakra-ui/react";
 import { useState } from "react";
 import { signIn, useSession } from "next-auth/react";
-import useSWR, { useSWRConfig } from "swr";
-import fetcher from "../lib/fetcher";
+import { useSWRConfig } from "swr";
 import Comment from "./Comment";
 
 export default function PostComment({ post }) {

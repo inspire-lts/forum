@@ -1,13 +1,12 @@
 import {
   Avatar,
-  Box,
   Button,
   Divider,
   HStack,
   Text,
   VStack,
 } from "@chakra-ui/react";
-import useSWR, { useSWRConfig } from "swr";
+import { useSWRConfig } from "swr";
 import { useSession } from "next-auth/react";
 import { format } from "timeago.js";
 import { MDXRemote } from "next-mdx-remote";
@@ -15,13 +14,11 @@ import MDXComponents from "./MDXComponent";
 import { useRouter } from "next/router";
 import Append from "./Append";
 import { useState } from "react";
+import Link from "next/link";
 
-export default function PostContent({ post, content }) {
+export default function PostContent({ post, content, session }) {
   const { author, append } = post;
-  const { data: session, status } = useSession();
-  if (status === "loading") {
-    return <Text>loading</Text>
-  }
+
   const router = useRouter();
   const { mutate } = useSWRConfig();
   const isAlreadyFavoriting = !!post?.favoritedBy.find(
@@ -29,7 +26,7 @@ export default function PostContent({ post, content }) {
   );
   const [favorite, setFavorite] = useState(isAlreadyFavoriting);
   const favoriteCount = post?.favoritedBy?.length;
-  
+
   const submitFavorite = async () => {
     const operation = !favorite ? "connect" : "disconnect";
     await fetch(`/api/favorite/${post.id}`, {
@@ -51,9 +48,11 @@ export default function PostContent({ post, content }) {
         <Avatar src={author?.image} size="sm" />
       </HStack>
       <HStack w="100%" px={2}>
-        <Text color="gray.300" fontSize="xs">
-          {author?.name}
-        </Text>
+        <Link href={`/dashboard/${author.id}`}>
+          <Text color="gray.400" _hover={{ cursor: "pointer"}}>
+            {author?.name}
+          </Text>
+        </Link>
         <Text color="gray.300" fontSize="xs">
           {format(post?.createdAt, "zh_CN")}
         </Text>
