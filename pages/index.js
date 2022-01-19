@@ -1,4 +1,4 @@
-import { Avatar, Box, Button, HStack, Text, VStack } from "@chakra-ui/react";
+import { Box, HStack, VStack } from "@chakra-ui/react";
 import WritePost from "../components/WritePost";
 import useSWR from "swr";
 import fetcher from "../lib/fetcher";

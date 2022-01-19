@@ -1,4 +1,4 @@
-import { Text, VStack, Box, HStack, Divider } from "@chakra-ui/react";
+import { Text, VStack, HStack, Divider } from "@chakra-ui/react";
 import useSWR from "swr";
 import fetcher from "../lib/fetcher";
 import { format } from "timeago.js";

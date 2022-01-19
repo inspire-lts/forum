@@ -1,4 +1,4 @@
-import { Avatar, Box, HStack, Button, Text } from "@chakra-ui/react";
+import { Avatar, HStack, Button, Text } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 
 export default function UserItem({ follow }) {
