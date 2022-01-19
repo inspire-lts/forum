@@ -52,6 +52,7 @@ export default function DashBoard({ id }) {
           <Text>{data.email}</Text>
         </Box>
       </HStack>
+      <Text fontSize={"xl"}>{data.bio}</Text>
       {session?.user.email === data.email ? (
         <Button
           onClick={() => router.push("/setting")}

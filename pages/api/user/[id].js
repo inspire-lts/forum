@@ -27,4 +27,18 @@ export default async (req, res) => {
     });
     res.status(200).json(user);
   }
+
+  if (req.method === "POST") {
+    const {formData} = req.body
+    console.log(formData, req.body)
+    const user = await prisma.user.update({
+      where: {
+        id
+      },
+      data: {
+        ...formData
+      }
+    })
+    res.status(200).json(user)
+  }
 };
