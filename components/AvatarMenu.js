@@ -1,4 +1,11 @@
-import { Avatar, Box, VStack, Text, useOutsideClick } from "@chakra-ui/react";
+import {
+  Avatar,
+  Box,
+  VStack,
+  Text,
+  useOutsideClick,
+  useColorMode,
+} from "@chakra-ui/react";
 import { useSession } from "next-auth/react";
 import useSWR from "swr";
 import fetcher from "../lib/fetcher";
@@ -9,11 +16,12 @@ import Link from "next/link";
 export default function AvatarMenu({ image }) {
   const { data: session, status } = useSession();
   const { data: user } = useSWR(`/api/email/${session?.user?.email}`, fetcher);
+  const { colorMode } = useColorMode();
   const [toggle, setToggle] = useState(false);
   const avatarRef = useRef(null);
 
   if (status === "loading") {
-    return <Text>loading</Text>
+    return <Text>loading</Text>;
   }
 
   useOutsideClick({
@@ -25,6 +33,7 @@ export default function AvatarMenu({ image }) {
       <Avatar src={image} onClick={(_) => setToggle(true)} />
       {toggle && (
         <VStack
+          zIndex={"10"}
           position="absolute"
           spacing={2}
           borderRadius="5px"
@@ -34,7 +43,10 @@ export default function AvatarMenu({ image }) {
           shadow="base"
           right="2px"
           top="50px"
-          _hover={{ cursor: "pointer"}}
+          _hover={{ cursor: "pointer" }}
+          backgroundColor={
+            colorMode === "light" ? "gray.100" : "blackAlpha.900"
+          }
         >
           <Link href={`/dashboard/${user.id}`}>
             <Text onClick={() => setToggle(false)}>个人主页</Text>
