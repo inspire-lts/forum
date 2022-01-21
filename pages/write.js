@@ -13,17 +13,12 @@ import "@uiw/react-markdown-preview/markdown.css";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
 import { useSWRConfig } from "swr";
+import myCategory from "../lib/category";
 
 const MDEditor = dynamic(
   () => import("@uiw/react-md-editor").then((mod) => mod.default),
   { ssr: false }
 );
-const myCategory = [
-  { value: "JS" },
-  { value: "JAVA" },
-  { value: "电影" },
-  { value: "找工作" },
-];
 
 export default function Write() {
   const [title, setTitle] = useState("");
