@@ -2,6 +2,7 @@ import { Avatar, HStack, Text, VStack, Box, Divider } from "@chakra-ui/react";
 import Link from "next/link";
 import { format } from "timeago.js";
 
+
 export default function Comment({ comment, authorId }) {
   const { author } = comment;
 
@@ -12,7 +13,9 @@ export default function Comment({ comment, authorId }) {
         <Box>
           <HStack>
             <Link href={`/dashboard/${comment.authorId}`}>
-              <Text color="gray.400" _hover={{ cursor: "pointer"}}>{author?.name}</Text>
+              <Text color="gray.400" _hover={{ cursor: "pointer" }}>
+                {author?.name}
+              </Text>
             </Link>
             {comment.authorId === authorId && (
               <Text
@@ -29,7 +32,25 @@ export default function Comment({ comment, authorId }) {
           <Text color="gray.400">{format(comment.createdAt, "zh_CN")}</Text>
         </Box>
       </HStack>
-      <Text>{comment.content}</Text>
+      <HStack justifyContent={"flex-start"} spacing={0}>
+        {comment?.content?.map((item) => {
+          const parseItem = JSON.parse(item);
+          return typeof parseItem === "object" ? (
+            <a href={`/dashboard/${parseItem?.id}`} key={parseItem.id}>
+              <Text
+                border={"1px"}
+                borderColor={"black"}
+                display={"inline"}
+                borderRadius={"13px"}
+                px={"4px"}
+                mx={"4px"}
+              >{`@${parseItem.name}`}</Text>
+            </a>
+          ) : (
+            <Text key={parseItem}>{parseItem}</Text>
+          );
+        })}
+      </HStack>
       <Divider />
     </VStack>
   );

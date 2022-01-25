@@ -1,5 +1,5 @@
 datasource db {
-  provider = "mysql"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
@@ -83,7 +83,7 @@ model Append {
 
 model Comment {
   id String @id @default(uuid())
-  content String
+  content String[]
   createdAt DateTime @default(now())
 
   postId String

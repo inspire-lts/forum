@@ -128,7 +128,6 @@ export default function PostComment({ post, member }) {
   });
   const { comment } = post;
   const postId = post?.id;
-  const [replay, setReplay] = useState("");
   const { data: session, status } = useSession();
   const { mutate } = useSWRConfig();
   const toast = useToast();
@@ -136,27 +135,21 @@ export default function PostComment({ post, member }) {
   if (status === "loading") {
     return <Text>loading</Text>;
   }
-  const handleReplay = (e) => {
-    let replayValue = e.target.value;
-    setReplay(replayValue);
-  };
 
   const handleSubmit = async () => {
-    // var contenteditable = document.querySelector('[contenteditable]')
-    // console.log(textRef.current, contenteditable.textContent);
-    const result = [];
+    const replay = [];
     const textHtml = textRef.current;
     for (let i = 0; i < textHtml.childNodes.length; i++) {
-      const nodeType = textHtml.childNodes[i].nodeType
-      const nodeContent = textHtml.childNodes[i].textContent
-      console.log(nodeContent,1111)
+      const nodeType = textHtml.childNodes[i].nodeType;
+      const nodeContent = textHtml.childNodes[i].textContent;
       if (nodeType === 1) {
         const user = textHtml.childNodes[i].childNodes[1].dataset.user;
-        result.push(user);
-      } else if (nodeContent || nodeContent !== "​\u200b") result.push(nodeContent);
+        replay.push(user);
+      } else if (nodeContent || nodeContent !== "​\u200b")
+        replay.push(JSON.stringify(nodeContent));
     }
-    console.log(result);
-    if (!replay) {
+
+    if (!replay.length) {
       toast({
         title: "评论失败",
         description: "评论不能为空",
@@ -175,9 +168,9 @@ export default function PostComment({ post, member }) {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ replay, result }),
+      body: JSON.stringify({ replay }),
     });
-    setReplay("");
+    textRef.current.textContent = "";
     mutate(`/api/post/${postId}`);
   };
 
@@ -222,12 +215,6 @@ export default function PostComment({ post, member }) {
     <VStack p={2} w="80%" border="1px" borderRadius="5px">
       <VStack w="100%">
         <Text>回复主题</Text>
-        <Input
-          w="100%"
-          value={replay}
-          onChange={handleReplay}
-          placeholder="友善发表自己的意见哦~"
-        />
         <Text
           ref={textRef}
           h={"40px"}
