@@ -7,16 +7,36 @@ import PostContent from "../../components/PostContent";
 import useSWR from "swr";
 import fetcher from "../../lib/fetcher";
 
+function unique(arr, key) {
+  if (!arr) return arr;
+  if (key === undefined) return [...new Set(arr)];
+  const map = {
+    string: (e) => e[key],
+    function: (e) => key(e),
+  };
+  const fn = map[typeof key];
+  const obj = arr.reduce((o, e) => ((o[fn(e)] = e), o), {});
+  return Object.values(obj);
+}
+
 export default function PostItem({ content, id }) {
   const { data, error } = useSWR(`/api/post/${id}`, fetcher);
   const { data: session, status } = useSession();
   if (error) return <Box>服务器抽风了</Box>;
-  if (!data || status==="loading") return <Box>loading</Box>;
- 
+  if (!data || status === "loading") return <Box>loading</Box>;
+  const commentMember = data.comment.map((member) => ({
+    name: member.author.name,
+    id: member.author.id,
+  }));
+  const joinMember = [
+    { name: data.author.name, id: data.author.id },
+    ...commentMember,
+  ];
+
   return (
     <VStack>
       <PostContent post={data} content={content} session={session} />
-      <PostComment post={data} />
+      <PostComment post={data} member={unique(joinMember, "id")} />
     </VStack>
   );
 }

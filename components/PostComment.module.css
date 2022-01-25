@@ -1,0 +1,21 @@
+.at {
+  outline: none;
+  appearance: none;
+  border-radius: 13px;
+  border: 1px solid black;
+  margin: 0 2px;
+  padding: 0 4px;
+  background-color: transparent;
+  height: 26px;
+  line-height: 26px;
+  cursor: pointer;
+  color: "black";
+}
+
+/* .at:empty:before {
+  content: '填写内容，输入@以选择某人';
+  color: gray;
+}
+.at:focus:before {
+  content: none;
+} */

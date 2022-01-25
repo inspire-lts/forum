@@ -30,7 +30,6 @@ export default async (req, res) => {
 
   if (req.method === "POST") {
     const {formData} = req.body
-    console.log(formData, req.body)
     const user = await prisma.user.update({
       where: {
         id

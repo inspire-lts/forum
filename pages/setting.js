@@ -25,7 +25,6 @@ export default function Setting() {
 
   const updateUser = async () => {
     const formData = { name, bio };
-    console.log(name, bio);
     await fetch(`/api/user/${user.id}`, {
       method: "POST",
       headers: {

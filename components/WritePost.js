@@ -27,6 +27,7 @@ export default function WritePost() {
         placeholder="创建帖子"
         onClick={(_) => (session ? router.push("/write") : signIn())}
         type="text"
+        isReadOnly
       />
     </HStack>
   );

@@ -6,7 +6,8 @@ export default async (req, res) => {
   const postId = req.query.id;
 
   if (req.method === "POST") {
-    const { replay } = req.body;
+    let { replay, result } = req.body;
+    console.log(result)
     const comment = await prisma.comment.create({
       data: {
         content: replay,
