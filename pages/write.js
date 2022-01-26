@@ -1,19 +1,11 @@
-import {
-  Container,
-  HStack,
-  Box,
-  Text,
-  Input,
-  Select,
-  Button,
-} from "@chakra-ui/react";
+import { Container, Box, Text, Input, Select, Button } from "@chakra-ui/react";
 import { useState } from "react";
 import "@uiw/react-md-editor/markdown-editor.css";
 import "@uiw/react-markdown-preview/markdown.css";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
 import { useSWRConfig } from "swr";
-import myCategory from "../lib/category";
+import { myCategory } from "../lib/utils";
 
 const MDEditor = dynamic(
   () => import("@uiw/react-md-editor").then((mod) => mod.default),

@@ -1,16 +1,4 @@
-import {
-  Text,
-  VStack,
-  Button,
-  Textarea,
-  Divider,
-  Alert,
-  AlertIcon,
-  useToast,
-  Input,
-  chakra,
-  useColorMode,
-} from "@chakra-ui/react";
+import { Text, VStack, Button, Divider, useToast } from "@chakra-ui/react";
 import { useState, useRef } from "react";
 import { signIn, useSession } from "next-auth/react";
 import { useSWRConfig } from "swr";
@@ -179,7 +167,6 @@ export default function PostComment({ post, member }) {
       const position = getRangeRect();
       setPosition(position);
       const user = getAtUser();
-      console.log(user);
       setQueryString(user || "");
       setShowDialog(true);
     } else {

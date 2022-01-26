@@ -1,25 +1,6 @@
 import { useRef, useState, useEffect } from "react";
 import styles from "./AtDialog.module.css";
 
-const mockData = [
-  {
-    name: "张二鸣",
-    id: "zhangyiming",
-  },
-  {
-    name: "张一鸣",
-    id: "whatthehell",
-  },
-  {
-    name: "马化腾",
-    id: "ponyma",
-  },
-  {
-    name: "马云",
-    id: "jackmasb",
-  },
-];
-
 const searchUser = (queryString, member) => {
   return queryString
     ? member.filter(({ name }) => name.startsWith(queryString))

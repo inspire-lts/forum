@@ -3,7 +3,7 @@ import WritePost from "../components/WritePost";
 import useSWR from "swr";
 import fetcher from "../lib/fetcher";
 import PostList from "../components/PostList";
-import myCategory from "../lib/category";
+import { myCategory } from "../lib/utils";
 import Link from "next/link";
 
 export default function Component() {
