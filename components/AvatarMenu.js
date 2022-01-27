@@ -25,7 +25,6 @@ export default function AvatarMenu({ image }) {
   if (status === "loading") {
     return <Text>loading</Text>;
   }
-  console.log(user, 1);
   useOutsideClick({
     ref: avatarRef,
     handler: () => setToggle(false),
@@ -33,7 +32,7 @@ export default function AvatarMenu({ image }) {
   return (
     <Box position="relative">
       <Avatar src={image} onClick={(_) => setToggle(true)} />
-      {!!user?.notifications.length && <BellIcon color={"red.300"} />}
+      {!!user?.notifications.length && !user.watching && <BellIcon color={"red.300"} />}
       {toggle && (
         <VStack
           zIndex={"10"}
@@ -60,7 +59,7 @@ export default function AvatarMenu({ image }) {
           <Link href={`/notifi/${user.id}`}>
             <Text onClick={() => setToggle(false)}>
               通知
-              {!!user?.notifications.length && <BellIcon color={"red.300"} />}
+              {!!user?.notifications.length && !user.watching && <BellIcon color={"red.300"} />}
             </Text>
           </Link>
           <Text onClick={() => signOut()}>退出</Text>
