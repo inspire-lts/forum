@@ -59,6 +59,7 @@ model Notification {
   postTitle String
   informer String
   image String
+  createdAt DateTime @default(now())
 
   notifiedId  String
   notified    User?   @relation(fields: [notifiedId], references: [id])

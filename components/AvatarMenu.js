@@ -5,7 +5,6 @@ import {
   Text,
   useOutsideClick,
   useColorMode,
-  Button,
 } from "@chakra-ui/react";
 import { BellIcon } from "@chakra-ui/icons";
 import { useSession } from "next-auth/react";
@@ -14,6 +13,7 @@ import fetcher from "../lib/fetcher";
 import { useRef, useState } from "react";
 import { signOut } from "next-auth/react";
 import Link from "next/link";
+
 
 export default function AvatarMenu({ image }) {
   const { data: session, status } = useSession();

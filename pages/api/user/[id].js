@@ -23,7 +23,11 @@ export default async (req, res) => {
         },
         followedBy: true,
         following: true,
-        notifications: true,
+        notifications: {
+          orderBy: {
+            createdAt: "desc"
+          }
+        },
       },
     });
     res.status(200).json(user);

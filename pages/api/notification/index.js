@@ -7,7 +7,6 @@ export default async (req, res) => {
       formData: { postId, postTitle, userInfo },
     } = req.body;
 
-    console.log(postId, postTitle, userInfo);
     const result = await prisma.notification.create({
       data: {
         postId,
