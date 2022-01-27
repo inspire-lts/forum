@@ -1,7 +1,6 @@
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
-  shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
 }
 
 generator client {
@@ -51,6 +50,18 @@ model User {
   favorites     Post[]     @relation("Favorites", references: [id])
   followedBy     User[]    @relation("UserFollows", references: [id])
   following      User[]    @relation("UserFollows", references: [id])
+  notifications Notification[]
+}
+
+model Notification {
+  id String @id @default(cuid())
+  postId String
+  postTitle String
+  informer String
+  image String
+
+  notifiedId  String
+  notified    User?   @relation(fields: [notifiedId], references: [id])
 }
 
 model VerificationToken {

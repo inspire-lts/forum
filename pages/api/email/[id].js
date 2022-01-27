@@ -8,6 +8,9 @@ export default async (req, res) => {
       where: {
         email,
       },
+      include: {
+        notifications: true,
+      },
     });
     res.status(200).json(user);
   }

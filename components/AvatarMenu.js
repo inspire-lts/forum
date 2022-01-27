@@ -5,7 +5,9 @@ import {
   Text,
   useOutsideClick,
   useColorMode,
+  Button,
 } from "@chakra-ui/react";
+import { BellIcon } from "@chakra-ui/icons";
 import { useSession } from "next-auth/react";
 import useSWR from "swr";
 import fetcher from "../lib/fetcher";
@@ -23,7 +25,7 @@ export default function AvatarMenu({ image }) {
   if (status === "loading") {
     return <Text>loading</Text>;
   }
-
+  console.log(user, 1);
   useOutsideClick({
     ref: avatarRef,
     handler: () => setToggle(false),
@@ -31,6 +33,7 @@ export default function AvatarMenu({ image }) {
   return (
     <Box position="relative">
       <Avatar src={image} onClick={(_) => setToggle(true)} />
+      {!!user?.notifications.length && <BellIcon color={"red.300"} />}
       {toggle && (
         <VStack
           zIndex={"10"}
@@ -52,7 +55,13 @@ export default function AvatarMenu({ image }) {
             <Text onClick={() => setToggle(false)}>个人主页</Text>
           </Link>
           <Link href="/setting">
-            <Text>个人设置</Text>
+            <Text onClick={() => setToggle(false)}>个人设置</Text>
+          </Link>
+          <Link href={`/notifi/${user.id}`}>
+            <Text onClick={() => setToggle(false)}>
+              通知
+              {!!user?.notifications.length && <BellIcon color={"red.300"} />}
+            </Text>
           </Link>
           <Text onClick={() => signOut()}>退出</Text>
         </VStack>

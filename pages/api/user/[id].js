@@ -6,7 +6,7 @@ export default async (req, res) => {
   if (req.method === "GET") {
     const user = await prisma.user.findUnique({
       where: {
-        id
+        id,
       },
       include: {
         posts: {
@@ -23,21 +23,22 @@ export default async (req, res) => {
         },
         followedBy: true,
         following: true,
+        notifications: true,
       },
     });
     res.status(200).json(user);
   }
 
   if (req.method === "POST") {
-    const {formData} = req.body
+    const { formData } = req.body;
     const user = await prisma.user.update({
       where: {
-        id
+        id,
       },
       data: {
-        ...formData
-      }
-    })
-    res.status(200).json(user)
+        ...formData,
+      },
+    });
+    res.status(200).json(user);
   }
 };

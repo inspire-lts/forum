@@ -106,6 +106,21 @@ const replaceAtUser = (user) => {
   }
 };
 
+// 判断是否只有text node ==》@button有没有插入成功
+const onlyText = (node) => {
+  let flag = true;
+
+  for (let i = 0; i < node.childNodes.length; i++) {
+    const nodeType = node.childNodes[i].nodeType;
+    if (nodeType !== 3) {
+      flag = false;
+      break;
+    }
+  }
+
+  return flag;
+};
+
 export default function PostComment({ post, member }) {
   const textRef = useRef(null);
   const [queryString, setQueryString] = useState("");
@@ -127,14 +142,34 @@ export default function PostComment({ post, member }) {
   const handleSubmit = async () => {
     const replay = [];
     const textHtml = textRef.current;
+    let userId = undefined;
+
     for (let i = 0; i < textHtml.childNodes.length; i++) {
       const nodeType = textHtml.childNodes[i].nodeType;
       const nodeContent = textHtml.childNodes[i].textContent;
       if (nodeType === 1) {
         const user = textHtml.childNodes[i].childNodes[1].dataset.user;
+        userId = JSON.parse(user);
         replay.push(user);
       } else if (nodeContent || nodeContent !== "​\u200b")
         replay.push(JSON.stringify(nodeContent));
+    }
+
+    if (!onlyText(textHtml)) {
+      const userInfo = {
+        informer: session.user.name,
+        image: session.user.image,
+        id: userId.id,
+      };
+      const formData = { postId: post.id, postTitle: post.title, userInfo };
+
+      await fetch("/api/notification", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ formData }),
+      });
     }
 
     if (!replay.length) {
