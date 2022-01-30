@@ -1,34 +1,13 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
-
-## Getting Started
-
-First, run the development server:
-
-```bash
-npm run dev
-# or
-yarn dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
-
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
-
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/import?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+## 技术栈
+[Nextjs](https://github.com/vercel/next.js) + [SWR](https://github.com/vercel/swr) + [ChakraUI](https://github.com/chakra-ui/chakra-ui) + [Prisma](https://github.com/prisma/prisma)
+## 环境变量设置
+* 创建自己的`env`文件
+* `DATABASE_URL`本地建议使用dokcer创建postgresql容器`docker run --name some-postgres -e POSTGRES_PASSWORD=mysecretpassword -d -p 5432:5432 postgres`
+* `GITHUB-ID`和`GITHUB-SECRET`使用[授权](https://github.com/settings/developers)创建一个自己的授权APP
+* `SECRET`使用`$ openssl rand -base64 32`创建
+## 本地跑起来
+* `npm install`，安装依赖
+* `npx prisma migrate dev`, 模型映射到数据库
+* `npm run dev`, 跑起来啦
+## 部署
+[参考我写的博客](https://myblog-v2.vercel.app/blog/%E9%80%9A%E8%BF%87Vercel%E9%83%A8%E7%BD%B2%E4%BD%BF%E7%94%A8NextAuthjs%E8%AE%A4%E8%AF%81%E7%9A%84%E7%BD%91%E7%AB%99)
