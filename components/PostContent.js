@@ -56,7 +56,7 @@ export default function PostContent({ post, content, session }) {
         <Text color="gray.300" fontSize="xs">
           {format(post?.createdAt, "zh_CN")}
         </Text>
-        {session.user.email === post.author.email && append?.length < 3 && (
+        {session?.user?.email === post.author.email && append?.length < 3 && (
           <Button
             color="gray.400"
             size={"xs"}
