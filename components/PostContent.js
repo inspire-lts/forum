@@ -49,14 +49,14 @@ export default function PostContent({ post, content, session }) {
       </HStack>
       <HStack w="100%" px={2}>
         <Link href={`/dashboard/${author.id}`}>
-          <Text color="gray.400" _hover={{ cursor: "pointer"}}>
+          <Text color="gray.400" _hover={{ cursor: "pointer" }}>
             {author?.name}
           </Text>
         </Link>
         <Text color="gray.300" fontSize="xs">
           {format(post?.createdAt, "zh_CN")}
         </Text>
-        {author?.id === post?.authorId && append?.length < 3 && (
+        {session.user.email === post.author.email && append?.length < 3 && (
           <Button
             color="gray.400"
             size={"xs"}
