@@ -14,6 +14,7 @@ import {
 } from "@chakra-ui/react";
 import useSWR, { useSWRConfig } from "swr";
 import { useSession } from "next-auth/react";
+import { signIn } from "next-auth/react";
 import fetcher from "../../lib/fetcher";
 import PostList from "../../components/PostList";
 import { useRouter } from "next/router";
@@ -29,10 +30,14 @@ export default function DashBoard({ id }) {
   if (!data || status === "loading") return <Box>loading</Box>;
   // 用户主页的关注者没有本人
   const isAreayFollowing = !!data.followedBy.find(
-    (f) => f.email === session.user.email
+    (f) => f.email === session?.user?.email
   );
 
   const toggleFollow = async () => {
+    if (!session) {
+      signIn();
+      return;
+    }
     const operation = isAreayFollowing ? "disconnect" : "connect";
     await fetch(`/api/follow/${id}`, {
       method: "POST",
@@ -53,7 +58,7 @@ export default function DashBoard({ id }) {
         </Box>
       </HStack>
       <Text fontSize={"xl"}>{data.bio}</Text>
-      {session?.user.email === data.email ? (
+      {session?.user?.email === data.email ? (
         <Button
           onClick={() => router.push("/setting")}
           my="4"
