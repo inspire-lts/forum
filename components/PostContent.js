@@ -7,7 +7,7 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { useSWRConfig } from "swr";
-import { useSession } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 import { format } from "timeago.js";
 import { MDXRemote } from "next-mdx-remote";
 import MDXComponents from "./MDXComponent";
@@ -28,6 +28,10 @@ export default function PostContent({ post, content, session }) {
   const favoriteCount = post?.favoritedBy?.length;
 
   const submitFavorite = async () => {
+    if (!session) {
+      signIn();
+      return;
+    }
     const operation = !favorite ? "connect" : "disconnect";
     await fetch(`/api/favorite/${post.id}`, {
       method: "POST",
